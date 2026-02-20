@@ -1,0 +1,49 @@
+version: '3'
+
+dotenv: ['.env']
+
+vars:
+  PYTHON_VERSION: '3.11'
+  PYTHON_BIN: 'python{{.PYTHON_VERSION}}'
+  VENV_PYTHON: '.venv/bin/python{{.PYTHON_VERSION}}'
+
+tasks:
+  init:
+    desc: Create a virtual environment and install dependencies, and set up .gitignore
+    cmds:
+      # check python version matches configured version
+      - '{{.PYTHON_BIN}} --version | grep -E ''Python {{.PYTHON_VERSION}}(\.[0-9]+)?'' || (echo "Python {{.PYTHON_VERSION}} is required" && exit 1)'
+      - '{{.PYTHON_BIN}} -m venv .venv'
+      - .venv/bin/pip install -r requirements.txt
+      # create .gitignore if it doesn't exist
+      - test -f .gitignore || touch .gitignore
+      # add .venv to .gitignore if it's not already there
+      - grep -qxF '.venv' .gitignore || echo '.venv' >> .gitignore
+      - grep -qxF '__pycache__' .gitignore || echo '__pycache__' >> .gitignore
+      - grep -qxF '*.pyc' .gitignore || echo '*.pyc' >> .gitignore
+      - grep -qxF '.env' .gitignore || echo '.env' >> .gitignore
+  task-1:
+    desc: Run task 1
+    cmd: '{{.VENV_PYTHON}} -m task.1-task-models'
+  task-2:
+    desc: Run task 2
+    cmd: '{{.VENV_PYTHON}} -m task.2-task-n'
+  task-3:
+    desc: Run task 3
+    cmd: '{{.VENV_PYTHON}} -m task.3-task-temperature'
+  task-4:
+    desc: Run task 4
+    cmd: '{{.VENV_PYTHON}} -m task.4-task-seed'
+  task-5:
+    desc: Run task 5
+    cmd: '{{.VENV_PYTHON}} -m task.5-task-max_tokens'
+  task-6:
+    desc: Run task 6
+    cmd: '{{.VENV_PYTHON}} -m task.6-task-frequency_penalty'
+  task-7:
+    desc: Run task 7
+    cmd: '{{.VENV_PYTHON}} -m task.7-task-presence_penalty'
+  task-8:
+    desc: Run task 8
+    cmd: '{{.VENV_PYTHON}} -m task.8-task-stop'
+  

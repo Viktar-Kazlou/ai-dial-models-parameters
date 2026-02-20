@@ -11,6 +11,8 @@ from task.app.main import run
 run(
     deployment_name='gpt-4o',
     print_only_content=True,
+    # presence_penalty=-2.0, # Very low value, the output will be more focused on the main topic
+    presence_penalty=2.0, # Very high value, the output will be more diverse
     # TODO:
     #  Use `presence_penalty` parameter with different range (-2.0 to 2.0)
 )

@@ -8,6 +8,8 @@ from task.app.main import run
 run(
     deployment_name='gpt-4o',
     print_only_content=True,
+    temperature=1.999999, # Very low temperature, the output will be more deterministic and focused
+    # temperature=0.0001, # Very low temperature, the output will be more deterministic and focused
     # TODO:
     #  Use `temperature` parameter with value in range from 0.0 to 1.0!
     #  (Optional) Use `temperature` parameter with value 2.1 and check what happens
